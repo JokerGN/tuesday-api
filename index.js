@@ -10,7 +10,7 @@ const router = new Router()
 app.use(bodyParser())
 app.use(cors())
 
-router.use('/', async function (context) {
+router.get('/', async function (context) {
   context.body = 'Hello koa api boilerplate'
 })
 
