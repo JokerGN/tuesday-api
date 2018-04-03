@@ -1,15 +1,22 @@
 import Sequelize from 'sequelize'
 import {database} from '../database'
 
-let galleryModel = database.define('gallery', {
-  galleryId: {
+let imageModel = database.define('image', {
+  imageId: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true
   },
-  galleryName: {
+  imagePath: {
     type: Sequelize.STRING(255),
     allowNull: false
+  },
+  galleryId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: 'gallery',
+      key: 'galleryId'
+    }
   },
   createdAt: {
     type: Sequelize.DATE,
@@ -22,9 +29,9 @@ let galleryModel = database.define('gallery', {
     type: Sequelize.DATE
   }
 }, {
-  tableName: 'gallery',
+  tableName: 'image',
   freezeTableName: true,
   paranoid: true
 })
 
-export default galleryModel
+export default imageModel

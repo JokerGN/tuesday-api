@@ -1,14 +1,14 @@
 import Sequelize from 'sequelize'
 import {database} from '../database'
 
-let galleryModel = database.define('gallery', {
-  galleryId: {
+let equipmentModel = database.define('equipment', {
+  equipmentId: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true
   },
-  galleryName: {
-    type: Sequelize.STRING(255),
+  imei: {
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   createdAt: {
@@ -22,9 +22,9 @@ let galleryModel = database.define('gallery', {
     type: Sequelize.DATE
   }
 }, {
-  tableName: 'gallery',
+  tableName: 'equipment',
   freezeTableName: true,
   paranoid: true
 })
 
-export default galleryModel
+export default equipmentModel
