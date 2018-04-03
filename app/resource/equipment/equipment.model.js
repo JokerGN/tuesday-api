@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize'
 import {database} from '../database'
+import equipLogModel from './equip_log.model'
 
 let equipmentModel = database.define('equipment', {
   equipmentId: {
@@ -8,7 +9,7 @@ let equipmentModel = database.define('equipment', {
     primaryKey: true
   },
   imei: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING(15),
     allowNull: false
   },
   createdAt: {
@@ -26,5 +27,8 @@ let equipmentModel = database.define('equipment', {
   freezeTableName: true,
   paranoid: true
 })
+
+equipLogModel.belongsTo(equipmentModel, {as: 'equipment', foreignKey: 'equipmentId'})
+equipmentModel.hasMany(equipLogModel, {as: 'equip_log', foreignKey: 'equipmentId'})
 
 export default equipmentModel
