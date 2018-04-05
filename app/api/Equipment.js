@@ -7,7 +7,7 @@ import EquipLogRepository from '../resource/equipment/equip_log.repository'
 const Equipment = new Router()
 
 Equipment.post('/log_request', async function (context, next) {
-  let data = context.request.body
+  let data = context.request.body.sad
   await EquipmentRepository.findOrCreate({imei: data.imei}, {imei: data.imei})
   .spread( async (user, created) => {
       await EquipLogRepository.create({
