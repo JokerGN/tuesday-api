@@ -31,12 +31,14 @@ const Equipment = new Router()
 
 Equipment.get('/log_request', async function (context, next) {
   let data = context.request.query
+  let latPos = Math.floor(data.lat/100) + Math.floor(data.lat%100)/60 + (data.lat - Math.floor(data.lat))/60
+  let lngPos = Math.floor(data.lng/100) + Math.floor(data.lng%100)/60 + (data.lng - Math.floor(data.lng))/60
   await EquipmentRepository.findOrCreate({imei: data.imei},{imei: data.imei})
   .spread( async (user, created) => {
       await EquipLogRepository.create({
         equipmentId: user.equipmentId,
-        lat: (data.lat/100),
-        lng: (data.lng/100),
+        lat: latPos,
+        lng: lngPos,
         x: data.x,
         y: data.y,
         z: data.z,
