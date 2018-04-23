@@ -31,6 +31,7 @@ const server = http.createServer(app.callback())
 const io = new IO(server)
 
 io.on('connection', function (client) {
+  console.log('Client connect id : ',client.id)
   async function getdata () {
     let data = await EquipmentRepository.findAndCountAllBy({},{})
     let equip_id = []
@@ -46,9 +47,9 @@ io.on('connection', function (client) {
       io.emit('connected',  location)
     })
   }
-  setInterval(getdata, 60000)
+  setInterval(getdata, 30000)
   client.on('disconnect', function () {
-    console.log('client disconnect')
+    console.log('Client disconnect id : ',client.id)
   })
 })
 
