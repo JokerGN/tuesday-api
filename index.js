@@ -46,7 +46,7 @@ io.on('connection', function (client) {
       io.emit('connected',  location)
     })
   }
-  setInterval(getdata, 100000)
+  setInterval(getdata, 60000)
   client.on('disconnect', function () {
     console.log('client disconnect')
   })
