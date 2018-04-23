@@ -32,6 +32,7 @@ const io = new IO(server)
 
 io.on('connection', function (client) {
   console.log('Client connect id : ',client.id)
+  getdata()
   async function getdata () {
     let data = await EquipmentRepository.findAndCountAllBy({},{})
     let equip_id = []
