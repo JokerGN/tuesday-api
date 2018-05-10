@@ -12,6 +12,11 @@ let equipmentModel = database.define('equipment', {
     type: Sequelize.STRING(15),
     allowNull: false
   },
+  type: {
+    type: Sequelize.ENUM,
+    values: ['walk', 'car'],
+    defaultValue: ['walk']
+  },
   createdAt: {
     type: Sequelize.DATE,
     allowNull: false
