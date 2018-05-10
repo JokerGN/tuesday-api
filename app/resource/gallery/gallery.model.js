@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize'
 import {database} from '../database'
+import imageModel from './image.model'
 
 let galleryModel = database.define('gallery', {
   galleryId: {
@@ -26,5 +27,8 @@ let galleryModel = database.define('gallery', {
   freezeTableName: true,
   paranoid: true
 })
+
+galleryModel.hasMany(imageModel, {as: 'images', foreignKey: 'galleryId'})
+imageModel.belongsTo(galleryModel, {as: 'gallery', foreignKey: 'galleryId'})
 
 export default galleryModel
