@@ -29,7 +29,6 @@ app.use(router.allowedMethods())
 
 const server = http.createServer(app.callback())
 const io = new IO(server)
-const Op = Sequelize.Op
 
 io.on('connection', function (client) {
   console.log('Client connect id : ',client.id)
@@ -40,15 +39,16 @@ io.on('connection', function (client) {
     data.rows.forEach(equip => {
       equip_id.push(equip.imei)
     })
-    let location = await EquipLogRepository.findBy({'$equipment.imei$': {
-      [Op.in]: equip_id
-    }}, {
-      scope: 'equip_logWithimei',
-      order: Sequelize.literal('equipLogId DESC')
+    equip_id.forEach( async function (equipment) {
+      let location = await EquipLogRepository.findBy({'$equipment.imei$': equipment}, {
+        scope: 'equip_logWithimei',
+        limit: 1,
+        order: Sequelize.literal('equipLogId DESC')
+      })
+      io.emit('connected',  location)
     })
-    io.emit('connected', location)
   }
-  setInterval(getdata, 5000)
+  setInterval(getdata, 30000)
   client.on('disconnect', function () {
     console.log('Client disconnect id : ',client.id)
   })
