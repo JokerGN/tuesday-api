@@ -9,7 +9,8 @@ equipLogModel.addScope('equip_logWithimei', {
       model: equipmentModel,
       required: true,
       attributes: [
-        'imei'
+        'imei',
+        'type'
       ]
     }
   ]
