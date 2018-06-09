@@ -46,7 +46,7 @@ io.on('connection', function (client) {
         order: Sequelize.literal('equipLogId DESC')
       })
       if (location.length !== 0) {
-        if (location[0].alert_flag === 1) {
+        if (location[0].alert_flag) {
           io.emit('connected',  location)
         }
       }
