@@ -32,8 +32,7 @@ Equipment.get('/log_request', async function (context, next) {
           y: data.y,
           z: data.z,
           alert_flag: data.alert_flag,
-          log_time: data.log_time,
-          deletedAt: null
+          log_time: data.log_time
         })
       }
     }
