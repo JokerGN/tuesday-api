@@ -45,7 +45,11 @@ io.on('connection', function (client) {
         limit: 1,
         order: Sequelize.literal('equipLogId DESC')
       })
-      io.emit('connected',  location)
+      if (location.length !== 0) {
+        if (location[0].alert_flag === 1) {
+          io.emit('connected',  location)
+        }
+      }
     })
   }
   setInterval(getdata, 1000)

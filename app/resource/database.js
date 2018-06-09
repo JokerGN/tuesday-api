@@ -6,7 +6,8 @@ export const database = new Sequelize(process.env.DB_NAME, process.env.DB_USER, 
   port: process.env.DB_PORT,
   pool: {
     min: 0,
-    max: 15
+    max: 15,
+    idle: 10000
   },
   logging: false,
   dialectOptions: {
