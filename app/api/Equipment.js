@@ -23,7 +23,7 @@ Equipment.get('/log_request', async function (context, next) {
       let lastLogTime = MomentTZ(lastLog[0].log_time).tz('Asia/Bangkok')
       let inputLogTime = Moment(data.log_time)
       let timediff = Moment.duration(inputLogTime.diff(lastLogTime))
-      if (timediff.hours() >= 0 && timediff.minutes() >= 10) {
+      if (timediff.hours() >= 0 && timediff.minutes() >= 10 || data.alert_flag) {
         await EquipLogRepository.create({
           equipmentId: equipment[0].equipmentId,
           lat: latPos,
