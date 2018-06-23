@@ -35,6 +35,17 @@ Equipment.get('/log_request', async function (context, next) {
           log_time: data.log_time
         })
       }
+    } else {
+      context.body = await EquipLogRepository.create({
+        equipmentId: equipment[0].equipmentId,
+        lat: latPos,
+        lng: lngPos,
+        x: data.x,
+        y: data.y,
+        z: data.z,
+        alert_flag: data.alert_flag,
+        log_time: data.log_time
+      })
     }
   }
   context.body = await EquipLogRepository.findBy({'$equipment.imei$': data.imei}, {
@@ -47,6 +58,37 @@ Equipment.get('/log_request', async function (context, next) {
 Equipment.get('/showall', async function (context, next) {
   context.body = await EquipmentRepository.findAndCountAllBy({}, {})
 })
+
+async function getLogs (equipment) {
+  await EquipLogRepository.findBy({'$equipment.imei$': equipment}, {
+    scope: 'equip_logWithimei',
+    limit: 1,
+    order: Sequelize.literal('equipLogId DESC')
+  })
+}
+
+Equipment.get('/showlogs', async function (context, next) {
+    let data = await EquipmentRepository.findAndCountAllBy({},{})
+    let equip_id = []
+    data.rows.forEach(equip => {
+      equip_id.push(equip.imei)
+    })
+
+    const result = equip_id.map( async function (equipment) {
+      let location = await EquipLogRepository.findBy({'$equipment.imei$': equip_id[0]}, {
+        scope: 'equip_logWithimei',
+        limit: 1,
+        order: Sequelize.literal('equipLogId DESC')
+      })
+      return location
+    })
+    let locations = null
+    locations = Promise.all(result)
+    .then( async res => {
+      return res
+    })
+    context.body = await locations
+  })
 
 Equipment.post('/update_type', async function (context, next) {
   let data = context.request.body

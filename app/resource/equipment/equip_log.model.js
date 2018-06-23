@@ -41,16 +41,6 @@ let equipLogModel = database.define('equip_log', {
   log_time: {
     type: Sequelize.DATE,
     allowNull: false
-  },
-  createdAt: {
-    type: Sequelize.DATE,
-    allowNull: false
-  },
-  updatedAt: {
-    type: Sequelize.DATE
-  },
-  deletedAt: {
-    type: Sequelize.DATE
   }
 }, {
   tableName: 'equip_log',
