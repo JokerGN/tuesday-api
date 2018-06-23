@@ -90,6 +90,25 @@ Equipment.get('/showlogs', async function (context, next) {
     context.body = await locations
   })
 
+Equipment.post('/alert_check', async function (context, next) {
+  let data = context.request.body
+  let lastLog = await EquipLogRepository.findBy({'equipmentId': data.equipmentId}, {
+    scope: 'equip_logWithimei',
+    limit: 1,
+    order: Sequelize.literal('equipLogId DESC')
+  })
+  context.body = await EquipLogRepository.create({
+    equipmentId: data.equipmentId,
+    lat: lastLog[0].lat,
+    lng: lastLog[0].lng,
+    x: lastLog[0].x,
+    y: lastLog[0].y,
+    z: lastLog[0].z,
+    alert_flag: 0,
+    log_time: Date.now()
+  })
+})
+
 Equipment.post('/update_type', async function (context, next) {
   let data = context.request.body
   await EquipmentRepository.updateBy({equipmentId: data.equipmentId},{type: data.type})
