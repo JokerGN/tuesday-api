@@ -75,7 +75,7 @@ Equipment.get('/showlogs', async function (context, next) {
     })
 
     const result = equip_id.map( async function (equipment) {
-      let location = await EquipLogRepository.findBy({'$equipment.imei$': equip_id[0]}, {
+      let location = await EquipLogRepository.findBy({'$equipment.imei$': equipment}, {
         scope: 'equip_logWithimei',
         limit: 1,
         order: Sequelize.literal('equipLogId DESC')
