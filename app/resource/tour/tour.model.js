@@ -13,7 +13,7 @@ let tourModel = database.define('tour', {
     allowNull: false
   },
   tourDescription: {
-    type: Sequelize.STRING(255),
+    type: Sequelize.TEXT,
     allowNull: false
   },
   dueDate: {
