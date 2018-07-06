@@ -16,7 +16,7 @@ const app = new Koa()
 const router = new Router()
 
 app.use(bodyParser({
-  formLimit: "100mb"
+  formLimit: "200mb"
 }))
 app.use(cors())
 
